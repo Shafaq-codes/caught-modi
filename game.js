@@ -16,13 +16,13 @@ function openFullscreen() {
 
 // --- Audio Context and Synthesizer System ---
 const AudioContext = window.AudioContext || window.webkitAudioContext;
-const audioCtx = new AudioContext();
+const audioCtx = new AudioContext({ latencyHint: 'interactive' });
 const customAudioBuffers = {};
 let currentHitAudioNode = null;
 let activeBlockingSources = 0;
 
 // Play custom audio asset
-function playCustomAudio(name, isHit = false) {
+function playCustomAudio(name, isHit = false, offset = 0) {
     if (audioCtx.state === 'suspended') {
         audioCtx.resume();
     }
@@ -41,7 +41,7 @@ function playCustomAudio(name, isHit = false) {
     const source = audioCtx.createBufferSource();
     source.buffer = customAudioBuffers[name];
     source.connect(audioCtx.destination);
-    source.start(0);
+    source.start(0, offset);
 
     if (isHit) {
         currentHitAudioNode = source;
@@ -649,7 +649,7 @@ function moveLeft() {
     if (currentLaneIndex > 0) {
         currentLaneIndex--;
         targetX = LANES[currentLaneIndex];
-        playCustomAudio('whatsapp_move');
+        playCustomAudio('whatsapp_move', false, 0.325);
     }
 }
 
@@ -657,13 +657,13 @@ function moveRight() {
     if (currentLaneIndex < 2) {
         currentLaneIndex++;
         targetX = LANES[currentLaneIndex];
-        playCustomAudio('whatsapp_move');
+        playCustomAudio('whatsapp_move', false, 0.325);
     }
 }
 
 function jump() {
     if (!isJumping) {
-        playCustomAudio('whatsapp_move');
+        playCustomAudio('whatsapp_move', false, 0.325);
         isJumping = true;
         yVelocity = jumpForce;
     }
