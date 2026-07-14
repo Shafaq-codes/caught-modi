@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Caught Modi - 3D Endless Runner Meme Game</title>
+    <!-- Google Fonts for futuristic and decorative text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- Canvas for Three.js WebGL Rendering -->
+        <canvas id="game-canvas"></canvas>
+        
+        <!-- Screen overlay for taking damage -->
+        <div id="damage-overlay"></div>
+        
+        <!-- UI overlay layer -->
+        <div id="ui-layer">
+            <!-- 1. Loading Screen -->
+            <div id="loading-screen" class="screen">
+                <div class="spinner"></div>
+                <h2>Loading Assets...</h2>
+                <p id="loading-progress">0%</p>
+                <p class="loading-tip">Loading sounds & assets. Tap to enable audio once loaded.</p>
+            </div>
+
+            <!-- 2. Start Screen -->
+            <div id="start-screen" class="screen hidden">
+                <h1 class="logo-text">Caught <span class="accent">Modi</span></h1>
+                <p class="tagline">★ RUN · DODGE · MEME · SURVIVE ★</p>
+                
+                <div class="controls-info">
+                    <div class="control-group">
+                        <h3>Keyboard Controls</h3>
+                        <p><strong>Move Left/Right:</strong> <span class="key">←</span> <span class="key">→</span> or <span class="key">A</span> <span class="key">D</span></p>
+                        <p><strong>Jump / Drop:</strong> <span class="key">↑</span> / <span class="key">↓</span> or <span class="key">W</span> / <span class="key">S</span></p>
+                    </div>
+                    <div class="control-group mobile-only">
+                        <h3>Mobile Controls</h3>
+                        <p><strong>Swipes:</strong> Left, Right, Up (Jump), Down (Drop)</p>
+                    </div>
+                </div>
+                
+                <button id="btn-play">Run!</button>
+            </div>
+
+            <!-- 3. HUD Overlay -->
+            <div id="hud" class="hidden">
+                <div class="hud-item">
+                    <svg class="icon" viewBox="0 0 24 24" fill="var(--color-primary)"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                    <span id="score-val" class="score-val">0</span>m
+                </div>
+                <div class="hud-item">
+                    <svg class="icon" viewBox="0 0 24 24" fill="#FFD700"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="7" fill="#DAA520"/></svg>
+                    <span id="coins-val" class="coins-val">0</span>
+                </div>
+                <div class="hud-item">
+                    <svg class="icon" viewBox="0 0 24 24" fill="var(--color-danger)"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                    <span id="lives-val" class="lives-val">3</span>
+                </div>
+            </div>
+
+            <!-- 4. Game Over Screen -->
+            <div id="game-over-screen" class="screen hidden">
+                <h2 class="danger-title">CAUGHT!</h2>
+                <p class="caught-msg">The Monster ACP Pradyuman got you.</p>
+                
+                <div class="stats-box">
+                    <div class="stat-row">
+                        <span>Distance:</span>
+                        <strong id="final-score">0</strong>m
+                    </div>
+                    <div class="stat-row">
+                        <span>Coins Collected:</span>
+                        <strong id="final-coins">0</strong>
+                    </div>
+                    <div class="stat-row">
+                        <span>High Score:</span>
+                        <strong id="high-score-val">0</strong>m
+                    </div>
+                </div>
+                
+                <button id="btn-restart">Run Again</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Include Three.js for 3D engine -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Include main game logic -->
+    <script src="game.js"></script>
+</body>
+</html>
